@@ -3,14 +3,15 @@ import { eventsQuantity } from "../variables.js"
 const screenEvent = {
   userProfile: document.querySelector(".profile-data"),
   renderEvents(user) {
-    const eventsWithPushEvent = user.events.filter(object => object.type === "PushEvent")
+    const eventsWithPushEvent = user.events.filter((object) => object.type === "PushEvent" || object.type === "CreateEvent")
     const eventsSelection = eventsWithPushEvent.slice(0, eventsQuantity)
-    const existEvent = eventsSelection.length
+    const existEvent = eventsSelection.length > 0
 
     let eventsItens = ""
 
     eventsSelection.forEach((event) => {
-      eventsItens += `<li><b>${event.repo.name}</b> - ${event.payload.commits[0].message}</li>`
+      eventsItens += `
+      <li><b>${event.repo.name}</b> - ${event.payload.commits ? event.payload.commits[0].message : `Repositório Criado em ${event.created_at}`}</li>`
     })
 
     if (!existEvent) eventsItens = `<li>

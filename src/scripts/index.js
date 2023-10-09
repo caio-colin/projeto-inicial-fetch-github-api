@@ -1,6 +1,7 @@
 import { getUser } from "./services/user.js"
 import { getRepositories } from "./services/repositories.js"
 import { getEvents } from "./services/events.js"
+import { getLanguage } from "./services/language.js"
 import { user } from "./objects/user.js"
 import { screenUser } from "./objects/screenUser.js"
 import { screenEvent } from "./objects/screenEvent.js"
@@ -19,7 +20,6 @@ document.getElementById("input-search").addEventListener("keyup", (e) => {
   const key = e.which || e.keyCode
   const isEnterKeyPressed = key === 13
 
-  
   if (isEnterKeyPressed) {
     if (validateEmptyInput(userName)) return
     getUserData(userName)
@@ -29,7 +29,7 @@ document.getElementById("input-search").addEventListener("keyup", (e) => {
 async function getUserData(userName) {
   const userReponse = await getUser(userName)
 
-  if (userReponse.message){
+  if (userReponse.message == "Not Found") {
     screenUser.renderNotFound()
     return
   }
@@ -40,6 +40,9 @@ async function getUserData(userName) {
   user.setInfo(userReponse)
   user.setRepositories(repositoriesReponse)
   user.setEvents(eventsResponse)
+
+  const languageReponse = await getLanguage(userName, user)
+  user.setRepoLang(languageReponse)
 
   screenUser.renderUser(user)
   screenRepo.renderRepo(user)
