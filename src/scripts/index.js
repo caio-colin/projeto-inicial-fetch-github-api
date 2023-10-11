@@ -16,7 +16,7 @@ document.getElementById("btn-search").addEventListener("click", () => {
 })
 
 document.getElementById("input-search").addEventListener("keyup", (e) => {
-  const userName = e.target.value
+  const userName = e.target.value.trim()
   const key = e.which || e.keyCode
   const isEnterKeyPressed = key === 13
 
