@@ -1,14 +1,10 @@
 const screenRepo = {
   userProfile: document.querySelector(".profile-data"),
   renderRepo(user) {
+    const mainLanguage = this.filterLang(user)
     let respositoriesItens = ""
-    const existRepositories = user.repositories.length > 0
-
-    const languageItens = user.repositoriesLanguage.map((objeto) => Object.keys(objeto))
-    const mainLanguage = languageItens.map((array) => array[0])
-       
+    
     user.repositories.forEach((repo, index) => {
-
       respositoriesItens += `<li>
                                 <a href="${repo.html_url}" target="_blank">${repo.name}
                                   <div class="set-icons">
@@ -21,17 +17,24 @@ const screenRepo = {
                               </li>`
     })
     
-    if (!existRepositories) respositoriesItens = `<li>
-                                                    <h3>
-                                                      <b>Este usuário não possui repositórios</b>
-                                                    </h3>
-                                                  </li>`
+    if (!user.repositories.length > 0) respositoriesItens = `<li>
+                                                              <h3>
+                                                                <b>Este usuário não possui repositórios</b>
+                                                              </h3>
+                                                            </li>`
 
     this.userProfile.innerHTML += `<div class="repositories section">
                                       <h2>Repositórios</h2>
                                       <ul>${respositoriesItens}</ul>
                                     </div>`
 
+  },
+  filterLang(user){
+    const languageItens = user.repositoriesLanguage.map((objeto) =>
+      Object.keys(objeto)
+    )
+    const mainLanguage = languageItens.map((array) => array[0])
+    return mainLanguage
   },
 }
 
