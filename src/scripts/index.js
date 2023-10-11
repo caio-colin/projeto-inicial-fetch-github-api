@@ -25,7 +25,7 @@ document.getElementById("input-search").addEventListener("keyup", (e) => {
     getUserData(userName)
   }
 })
-
+getUserData('mattzu22')
 async function getUserData(userName) {
   const userReponse = await getUser(userName)
 

@@ -17,24 +17,22 @@ const screenRepo = {
                               </li>`
     })
     
-    if (!user.repositories.length > 0) respositoriesItens = `<li>
-                                                              <h3>
-                                                                <b>Este usuário não possui repositórios</b>
-                                                              </h3>
-                                                            </li>`
+    if (user.repositories.length === 0) respositoriesItens = `<li>
+                                                                <h3>
+                                                                  <b>Este usuário não possui repositórios</b>
+                                                                </h3>
+                                                              </li>`
 
     this.userProfile.innerHTML += `<div class="repositories section">
                                       <h2>Repositórios</h2>
                                       <ul>${respositoriesItens}</ul>
                                     </div>`
-
   },
   filterLang(user){
     const languageItens = user.repositoriesLanguage.map((objeto) =>
       Object.keys(objeto)
     )
-    const mainLanguage = languageItens.map((array) => array[0])
-    return mainLanguage
+    return languageItens.map((array) => array[0])
   },
 }
 
